@@ -1,0 +1,9 @@
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\autocfg-d9e4aa0d439e0dba.rmeta: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\error.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\version.rs
+
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\libautocfg-d9e4aa0d439e0dba.rlib: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\error.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\version.rs
+
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\autocfg-d9e4aa0d439e0dba.d: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\error.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\version.rs
+
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\lib.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\error.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\autocfg-1.1.0\src\version.rs:

@@ -1,0 +1,10 @@
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\weezl-d25494102aee74af.rmeta: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\decode.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\encode.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\error.rs
+
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\libweezl-d25494102aee74af.rlib: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\decode.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\encode.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\error.rs
+
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\weezl-d25494102aee74af.d: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\decode.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\encode.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\error.rs
+
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\lib.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\decode.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\encode.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\weezl-0.1.5\src\error.rs:

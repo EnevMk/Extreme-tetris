@@ -1,0 +1,10 @@
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\memoffset-2b9a95216034c7cc.rmeta: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\raw_field.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\offset_of.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\span_of.rs
+
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\libmemoffset-2b9a95216034c7cc.rlib: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\raw_field.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\offset_of.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\span_of.rs
+
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\memoffset-2b9a95216034c7cc.d: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\raw_field.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\offset_of.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\span_of.rs
+
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\lib.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\raw_field.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\offset_of.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\memoffset-0.6.5\src\span_of.rs:

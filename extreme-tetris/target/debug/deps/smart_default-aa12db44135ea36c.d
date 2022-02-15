@@ -1,0 +1,8 @@
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\smart_default-aa12db44135ea36c.dll: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\body_impl.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\default_attr.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\util.rs
+
+C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\smart_default-aa12db44135ea36c.d: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\body_impl.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\default_attr.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\util.rs
+
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\lib.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\body_impl.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\default_attr.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\smart-default-0.6.0\src\util.rs:

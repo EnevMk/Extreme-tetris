@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\build\typenum-8470f879d84e31cc\out\consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=C:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\build\typenum-8470f879d84e31cc\out\op.rs
