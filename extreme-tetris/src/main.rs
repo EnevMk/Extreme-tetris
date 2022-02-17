@@ -3,6 +3,7 @@ use ggez::{Context, ContextBuilder, GameResult, GameError};
 use ggez::conf::{Conf, WindowMode};
 use ggez::mint::Point2;
 use ggez::mint::Vector2;
+use ggez::event::{KeyCode, KeyMods};
 use ggez::event;
 use ggez::filesystem;
 use ggez::timer;
@@ -30,6 +31,14 @@ impl Figure {
     pub fn new(kind_: FigureType) -> Figure {
 
         match kind_ {
+
+            FigureType::I => Figure {
+                            kind: kind_,
+
+                            shape: [[ 0, 1, 0, 0 ],
+                                    [ 0, 1, 0, 0 ],
+                                    [ 0, 1, 0, 0 ],
+                                    [ 0, 1, 0, 0 ]] },
             FigureType::L => Figure {
                             kind: kind_,
 
@@ -38,15 +47,59 @@ impl Figure {
                                     [ 0, 0, 0, 0 ],
                                     [ 0, 0, 0, 0 ]] },
 
-            _             => Figure {
+            FigureType::T => Figure {
                             kind: kind_,
 
                             shape: [[ 0, 1, 0, 0 ],
                                     [ 1, 1, 1, 0 ],
                                     [ 0, 0, 0, 0 ],
                                     [ 0, 0, 0, 0 ]] },
+            FigureType::J => Figure {
+                            kind: kind_,
+
+                            shape: [[ 1, 0, 0, 0 ],
+                                    [ 1, 1, 1, 0 ],
+                                    [ 0, 0, 0, 0 ],
+                                    [ 0, 0, 0, 0 ]] },
+            FigureType::S => Figure {
+                            kind: kind_,
+
+                            shape: [[ 0, 1, 1, 0 ],
+                                    [ 1, 1, 0, 0 ],
+                                    [ 0, 0, 0, 0 ],
+                                    [ 0, 0, 0, 0 ]] },
+            FigureType::Z => Figure {
+                            kind: kind_,
+
+                            shape: [[ 1, 1, 0, 0 ],
+                                    [ 0, 1, 1, 0 ],
+                                    [ 0, 0, 0, 0 ],
+                                    [ 0, 0, 0, 0 ]] },
+            FigureType::O => Figure {
+                            kind: kind_,
+
+                            shape: [[ 0, 1, 1, 0 ],
+                                    [ 0, 1, 1, 0 ],
+                                    [ 0, 0, 0, 0 ],
+                                    [ 0, 0, 0, 0 ]] }, 
         }
     }
+
+    /* pub fn rotate(&mut self) {
+
+        let dim = match self.kind {
+            FigureType::I => 4,
+            _             => 3
+        };
+
+        for row in 0..dim {
+
+            for col in 0..dim {
+
+
+            }
+        }
+    } */
 
     pub fn draw(&self, ctx: &mut Context, assets: &Assets, col: u8, row: u8) -> GameResult<()> {
 
@@ -118,24 +171,57 @@ impl GameState {
         Ok(gs)
     }
 
+    fn move_left(&mut self) {
+        if !self.collide_at_sides(-1) {
+            self.row -= 1;
+        }
+    }
+
+    fn move_right(&mut self) {
+        if !self.collide_at_sides(1) {
+            self.row += 1;
+        }
+    }
+
     fn figure_collides(&self) -> bool {
 
         for i in 0..4 {
 
             for j in 0..4 {
 
-                let x_coord : f32 = 35.0 * (i + self.row) as f32;
-                let y_coord : f32 = 35.0 * (j + self.col) as f32;
-
                 if self.current_figure.shape[j as usize][i as usize] == 1 {
                     
-                    if j + self.col + 1 < 20 && i + self.row < 10 {
+                    if j + self.col + 1 <= 20 && i + self.row < 10 {
 
-                        if self.field[(j + self.col) as usize][(i + self.row) as usize] == 1
-                            || j + self.col == 18
+                        if j + self.col == 19
+                          || self.field[(j + self.col + 1) as usize][(i + self.row) as usize] == 1
                         {
                             return true;
                         }
+                    }
+                }
+            }
+        }
+
+        false
+    }
+
+    fn collide_at_sides(&self, dir: i8) -> bool {
+
+        for i in 0..4 {
+
+            for j in 0..4 {
+
+                if self.current_figure.shape[j as usize][i as usize] == 1 {
+                    
+                    if (i + self.row) as i8 + dir > 9 || (i + self.row) as i8 + dir < 0 {
+                        return true;
+                    }
+
+                    else if (i + self.row) as i8 + dir <= 9 && (i + self.row) as i8 + dir >= 0
+                            && self.field[(j + self.col) as usize][((i + self.row) as i8 + dir) as usize] == 1
+                    {
+                        return true;
                     }
                 }
             }
@@ -163,34 +249,6 @@ impl GameState {
             }
         }
     }
-
-    /* pub fn draw(&self, ctx: &mut Context, assets: &Assets) -> GameResult {
-
-        for i in 0..10 {
-
-            for j in 0..24 {
-
-                let x_coord : f32 = 35.0 * i as f32;
-                let y_coord : f32 = 35.0 * j as f32;
-
-                if self.field[i][j] == 0 {
-                
-                    let draw_params = graphics::DrawParam::default().
-                                    dest(Point2::<f32>{x: x_coord, y: y_coord});
-                                    //offset(Point2 { x: 0.5, y: 1.0 });
-                    graphics::draw(ctx, &assets.black, draw_params)?;
-                }
-                else {
-                    let draw_params = graphics::DrawParam::default().
-                                    dest(Point2::<f32>{x: x_coord, y: y_coord});
-                                    //offset(Point2 { x: 0.5, y: 1.0 });
-                    graphics::draw(ctx, &assets.orange, draw_params)?;
-                }
-            }
-        }
-
-        Ok(());
-    } */
 }
 
 impl ggez::event::EventHandler<GameError> for GameState {
@@ -200,12 +258,11 @@ impl ggez::event::EventHandler<GameError> for GameState {
         const DESIRED_FPS: u32 = 30;
 
         while timer::check_update_time(ctx, DESIRED_FPS) {
-            println!("Ebasi {}", self.frames_until_fall);
             if self.frames_until_fall == 0 {
 
                 //if self.col == 18 {return Ok(())}
                 if self.col < 20 {
-                    self.col += 1;
+                    
 
                     if self.figure_collides() {
 
@@ -214,6 +271,9 @@ impl ggez::event::EventHandler<GameError> for GameState {
                         self.col = 0;
                         self.row = 4;
                         return Ok(());
+                    }
+                    else {
+                        self.col += 1;
                     }
                 }
                 self.frames_until_fall = 20;
@@ -243,7 +303,6 @@ impl ggez::event::EventHandler<GameError> for GameState {
                 let y_coord : f32 = 35.0 * j as f32;
 
                 if self.field[j][i] == 0 {
-                    println!("cherno");
                     let draw_params = graphics::DrawParam::default().
                                     dest(Point2::<f32>{x: x_coord, y: y_coord}).
                                     scale(Vector2 { x: 1.75, y: 1.75 });
@@ -251,7 +310,6 @@ impl ggez::event::EventHandler<GameError> for GameState {
                     graphics::draw(ctx, &self.assets.black, draw_params)?;
                 }
                 else {
-                    println!("orange");
                     let draw_params = graphics::DrawParam::default().
                                     dest(Point2::<f32>{x: x_coord, y: y_coord}).
                                     scale(Vector2 { x: 1.75, y: 1.75 });
@@ -260,12 +318,6 @@ impl ggez::event::EventHandler<GameError> for GameState {
                 }
             }
         }
-
-        /* let draw_params = graphics::DrawParam::default().
-                                    dest(Point2::<f32>{x: 35.0* self.row as f32, y: 35.0* self.col as f32}).
-                                    scale(Vector2 { x: 1.75, y: 1.75 });
-                                    //offset(Point2 { x: 0.5, y: 1.0 });
-                    graphics::draw(ctx, &self.assets.red, draw_params)?; */
 
         for i in 0..4 {
 
@@ -286,6 +338,20 @@ impl ggez::event::EventHandler<GameError> for GameState {
         }
         graphics::present(ctx)?;
         Ok(())
+    }
+
+    fn key_down_event(&mut self, 
+        ctx: &mut Context, 
+        keycode: KeyCode, 
+        _keymod: KeyMods, 
+        _repeat: bool)
+    {
+        match keycode {
+
+            KeyCode::Left  => self.move_left(),
+            KeyCode::Right => self.move_right(),
+            _              => ()
+        }    
     }
 }
 
