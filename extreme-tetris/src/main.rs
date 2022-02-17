@@ -9,6 +9,7 @@ use ggez::filesystem;
 use ggez::timer;
 use std::env;
 use std::path;
+use rand::{Rng, thread_rng};
 //use assets::*;
 
 #[derive(Clone)]
@@ -85,21 +86,30 @@ impl Figure {
         }
     }
 
-    /* pub fn rotate(&mut self) {
+    pub fn is_first_column_zero(&self) -> bool {
 
-        let dim = match self.kind {
-            FigureType::I => 4,
-            _             => 3
-        };
+        for col in 0..4 {
+            if self.shape[col][0] == 1 {return false;}
+        }
 
-        for row in 0..dim {
+        true
+    }
 
-            for col in 0..dim {
+    fn left_shift(&mut self) {
 
+        for row in 0..4 {
 
+            for col in 0..3 {
+
+                self.shape[row][col] = self.shape[row][col + 1];
             }
         }
-    } */
+
+        for row in 0..4 {
+
+            self.shape[row][3] = 0;
+        }
+    }
 
     pub fn draw(&self, ctx: &mut Context, assets: &Assets, col: u8, row: u8) -> GameResult<()> {
 
@@ -140,7 +150,7 @@ struct GameState {
 
     frames_until_fall: u8,
     field: Field,
-    //figures: Vec<FigureType>,
+    figures: Vec<FigureType>,
     current_figure: Figure,
     //next_figure: Figure,
     screen_width: f32,
@@ -166,6 +176,7 @@ impl GameState {
             col: 7,
             row: 7,
             assets: assets,
+            figures: vec![FigureType::I, FigureType::J, FigureType::L, FigureType::O, FigureType::S, FigureType::T, FigureType::Z],
         };
 
         Ok(gs)
@@ -173,7 +184,13 @@ impl GameState {
 
     fn move_left(&mut self) {
         if !self.collide_at_sides(-1) {
-            self.row -= 1;
+
+            if self.row == 0 && self.current_figure.is_first_column_zero() {
+                self.current_figure.left_shift();
+            }
+            else { 
+                self.row -= 1;
+            }
         }
     }
 
@@ -236,9 +253,6 @@ impl GameState {
 
             for j in 0..4 {
 
-                let x_coord : f32 = 35.0 * (i + self.row) as f32;
-                let y_coord : f32 = 35.0 * (j + self.col) as f32;
-
                 if self.current_figure.shape[j as usize][i as usize] == 1 {
                     
                     if j + self.col < 20 && i + self.row < 10 {
@@ -248,6 +262,30 @@ impl GameState {
                 }
             }
         }
+    }
+
+    pub fn rotate_figure(&mut self) {
+
+        let dim = match self.current_figure.kind {
+            FigureType::I => 4,
+            _             => 3
+        };
+
+        let mut new_shape : [[u8; 4]; 4] = self.current_figure.shape;
+
+        for row in 0..dim {
+            let mut ind = dim - 1;
+            for col in 0..dim {
+                
+                //println!("{}, {}", self.col, col);
+                if self.field[col + self.col as usize][row + self.row as usize] == 1 {return;}
+
+                new_shape[row][col] = self.current_figure.shape[ind][row];
+                if ind > 0 {ind -= 1;}
+            }
+        }
+
+        self.current_figure.shape = new_shape;
     }
 }
 
@@ -267,7 +305,11 @@ impl ggez::event::EventHandler<GameError> for GameState {
                     if self.figure_collides() {
 
                         self.fix_figure_to_field();
-                        self.current_figure = Figure::new(FigureType::T);
+
+                        let mut rng = rand::thread_rng();   
+                        let rand_index = rng.gen_range(0, 6);
+
+                        self.current_figure = Figure::new(self.figures[rand_index].clone());
                         self.col = 0;
                         self.row = 4;
                         return Ok(());
@@ -348,9 +390,11 @@ impl ggez::event::EventHandler<GameError> for GameState {
     {
         match keycode {
 
-            KeyCode::Left  => self.move_left(),
-            KeyCode::Right => self.move_right(),
-            _              => ()
+            KeyCode::Left   => self.move_left(),
+            KeyCode::Right  => self.move_right(),
+            KeyCode::Up     => self.rotate_figure(),
+            KeyCode::Escape => event::quit(ctx),
+            _               => ()
         }    
     }
 }
@@ -365,7 +409,7 @@ fn main() {
                 ..Default::default()
             });
 
-    let (mut ctx, event_loop) = ContextBuilder::new("hello_ggez", "awesome_person")
+    let (mut ctx, event_loop) = ContextBuilder::new("extreme-tetris", "Mihail")
                             .default_conf(conf.clone())
                             .build()
                             .unwrap();

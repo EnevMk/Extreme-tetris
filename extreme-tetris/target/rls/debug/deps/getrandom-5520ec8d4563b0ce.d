@@ -1,0 +1,9 @@
+c:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\rls\debug\deps\getrandom-5520ec8d4563b0ce.rmeta: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\util.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error_impls.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\windows.rs
+
+c:\Users\Asus VivoBook X510UF\Desktop\dev\Extreme Tetris\extreme-tetris\target\rls\debug\deps\getrandom-5520ec8d4563b0ce.d: C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\lib.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\util.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error_impls.rs C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\windows.rs
+
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\lib.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\util.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error_impls.rs:
+C:\Users\Asus\ VivoBook\ X510UF\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\windows.rs:
