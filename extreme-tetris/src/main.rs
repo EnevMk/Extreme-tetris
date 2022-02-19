@@ -13,6 +13,36 @@ use rand::{Rng, thread_rng};
 //use assets::*;
 
 #[derive(Clone)]
+pub struct Assets {
+
+    pub orange: graphics::Image,
+    pub black: graphics::Image,
+    pub red: graphics::Image,
+    pub purple: graphics::Image,
+    pub blue: graphics::Image,
+    pub green: graphics::Image,
+    pub yellow: graphics::Image,
+    pub cyan: graphics::Image,
+    
+}
+
+impl Assets {
+    pub fn new(ctx: &mut Context) -> GameResult<Assets> {
+
+        let orange = graphics::Image::new(ctx, "\\orange.png")?;
+        let black  = graphics::Image::new(ctx, "\\field.png")?;
+        let red    = graphics::Image::new(ctx, "\\red.png")?;
+        let cyan   = graphics::Image::new(ctx, "\\cyan.png")?;
+        let purple = graphics::Image::new(ctx, "\\purple.png")?;
+        let blue   = graphics::Image::new(ctx, "\\blue.png")?;
+        let green  = graphics::Image::new(ctx, "\\green.png")?;
+        let yellow = graphics::Image::new(ctx, "\\yellow.png")?;
+
+        Ok(Assets {orange, black, red, cyan, purple, blue, green, yellow})
+    }
+}
+
+#[derive(Clone)]
 enum FigureType {
 
     L, J, O, S, Z, I, T
@@ -20,16 +50,14 @@ enum FigureType {
 
 #[derive(Clone)]
 struct Figure {
-
     kind: FigureType,
-    /* col: u8,
-    row: u8, */
     shape: [[u8; 4]; 4],
+    color: graphics::Image,
 }
 
 impl Figure {
 
-    pub fn new(kind_: FigureType) -> Figure {
+    pub fn new(kind_: FigureType, assets: &Assets) -> Figure {
 
         match kind_ {
 
@@ -39,50 +67,59 @@ impl Figure {
                             shape: [[ 0, 1, 0, 0 ],
                                     [ 0, 1, 0, 0 ],
                                     [ 0, 1, 0, 0 ],
-                                    [ 0, 1, 0, 0 ]] },
+                                    [ 0, 1, 0, 0 ]],
+                            
+                            color: assets.orange.clone()},
+
             FigureType::L => Figure {
                             kind: kind_,
-
                             shape: [[ 0, 0, 1, 0 ],
                                     [ 1, 1, 1, 0 ],
                                     [ 0, 0, 0, 0 ],
-                                    [ 0, 0, 0, 0 ]] },
+                                    [ 0, 0, 0, 0 ]],
+                            
+                            color: assets.blue.clone()},
 
             FigureType::T => Figure {
                             kind: kind_,
-
                             shape: [[ 0, 1, 0, 0 ],
                                     [ 1, 1, 1, 0 ],
                                     [ 0, 0, 0, 0 ],
-                                    [ 0, 0, 0, 0 ]] },
+                                    [ 0, 0, 0, 0 ]],
+
+                            color: assets.purple.clone()},
             FigureType::J => Figure {
                             kind: kind_,
-
                             shape: [[ 1, 0, 0, 0 ],
                                     [ 1, 1, 1, 0 ],
                                     [ 0, 0, 0, 0 ],
-                                    [ 0, 0, 0, 0 ]] },
+                                    [ 0, 0, 0, 0 ]],
+
+                            color: assets.yellow.clone()},
             FigureType::S => Figure {
                             kind: kind_,
-
                             shape: [[ 0, 1, 1, 0 ],
                                     [ 1, 1, 0, 0 ],
                                     [ 0, 0, 0, 0 ],
-                                    [ 0, 0, 0, 0 ]] },
+                                    [ 0, 0, 0, 0 ]],
+
+                            color: assets.cyan.clone()},
             FigureType::Z => Figure {
                             kind: kind_,
-
                             shape: [[ 1, 1, 0, 0 ],
                                     [ 0, 1, 1, 0 ],
                                     [ 0, 0, 0, 0 ],
-                                    [ 0, 0, 0, 0 ]] },
+                                    [ 0, 0, 0, 0 ]],
+
+                            color: assets.green.clone()},
             FigureType::O => Figure {
                             kind: kind_,
-
                             shape: [[ 0, 1, 1, 0 ],
                                     [ 0, 1, 1, 0 ],
                                     [ 0, 0, 0, 0 ],
-                                    [ 0, 0, 0, 0 ]] }, 
+                                    [ 0, 0, 0, 0 ]],
+
+                            color: assets.red.clone()},
         }
     }
 
@@ -119,27 +156,9 @@ impl Figure {
         let draw_params = graphics::DrawParam::default().
                     dest(Point2::<f32>{x: x_coord, y: y_coord}).
                     offset(Point2 { x: 0.5, y: 1.0 });
-                graphics::draw(ctx, &assets.orange, draw_params)?;
+                graphics::draw(ctx, &assets.green, draw_params)?;
 
         Ok(())
-    }
-}
-
-#[derive(Clone)]
-pub struct Assets {
-
-    pub orange: graphics::Image,
-    pub black: graphics::Image,
-    pub red: graphics::Image,
-}
-
-impl Assets {
-    pub fn new(ctx: &mut Context) -> GameResult<Assets> {
-
-        let orange = graphics::Image::new(ctx, "\\l.png")?;
-        let black = graphics::Image::new(ctx, "\\field.png")?;
-        let red = graphics::Image::new(ctx, "\\z.png")?;
-        Ok(Assets {orange, black, red})
     }
 }
 
@@ -172,7 +191,7 @@ impl GameState {
             field: [[0; 10] ; 20],
             screen_width: 350.0,
             screen_height: 700.0,
-            current_figure: Figure::new(FigureType::L),
+            current_figure: Figure::new(FigureType::L, &assets),
             col: 7,
             row: 7,
             assets: assets,
@@ -206,12 +225,12 @@ impl GameState {
 
             for j in 0..4 {
 
-                if self.current_figure.shape[j as usize][i as usize] == 1 {
+                if self.current_figure.shape[j as usize][i as usize] != 0 {
                     
                     if j + self.col + 1 <= 20 && i + self.row < 10 {
 
                         if j + self.col == 19
-                          || self.field[(j + self.col + 1) as usize][(i + self.row) as usize] == 1
+                          || self.field[(j + self.col + 1) as usize][(i + self.row) as usize] != 0
                         {
                             return true;
                         }
@@ -236,7 +255,7 @@ impl GameState {
                     }
 
                     else if (i + self.row) as i8 + dir <= 9 && (i + self.row) as i8 + dir >= 0
-                            && self.field[(j + self.col) as usize][((i + self.row) as i8 + dir) as usize] == 1
+                            && self.field[(j + self.col) as usize][((i + self.row) as i8 + dir) as usize] != 0
                     {
                         return true;
                     }
@@ -250,15 +269,22 @@ impl GameState {
     fn fix_figure_to_field(&mut self) -> () {
 
         for i in 0..4 {
-
             for j in 0..4 {
 
                 if self.current_figure.shape[j as usize][i as usize] == 1 {
                     
                     if j + self.col < 20 && i + self.row < 10 {
-                        self.field[(j + self.col) as usize][(i + self.row) as usize] = 1;
+                        self.field[(j + self.col) as usize][(i + self.row) as usize] = match self.current_figure.kind {
+
+                            FigureType::I => 1,
+                            FigureType::J => 2,
+                            FigureType::L => 3,
+                            FigureType::O => 4,
+                            FigureType::S => 5,
+                            FigureType::T => 6,
+                            FigureType::Z => 7
+                        };
                     }
-                    
                 }
             }
         }
@@ -287,6 +313,51 @@ impl GameState {
 
         self.current_figure.shape = new_shape;
     }
+
+    fn hard_drop(&mut self) {
+
+        if !self.figure_collides() {
+            self.col += 1;
+        }
+    }
+
+    fn match_color_code(&self, code: u8) -> &graphics::Image {
+
+        match code {
+            1 => &self.assets.orange,
+            2 => &self.assets.yellow,
+            3 => &self.assets.blue,
+            4 => &self.assets.red,
+            5 => &self.assets.cyan,
+            6 => &self.assets.purple,
+            7 => &self.assets.green,
+            _ => &self.assets.black
+        }
+    }
+
+    fn clear_complete_rows(&mut self) {
+
+        let mut new_field : Field = [[0; 10]; 20];
+        let mut new_field_row = 19;
+
+        for row in (0..20).rev() {
+
+            let mut slots_count = 0;
+
+            for col in 0..10 {
+                if self.field[row][col] != 0 { slots_count += 1; }
+            }
+
+            if slots_count == 10 { continue; }
+
+            if self.field[row].iter().sum::<u8>() > 0 {
+                new_field[new_field_row] = self.field[row];
+                new_field_row -= 1;
+            }
+        }
+
+        self.field = new_field;
+    }
 }
 
 impl ggez::event::EventHandler<GameError> for GameState {
@@ -298,18 +369,18 @@ impl ggez::event::EventHandler<GameError> for GameState {
         while timer::check_update_time(ctx, DESIRED_FPS) {
             if self.frames_until_fall == 0 {
 
-                //if self.col == 18 {return Ok(())}
                 if self.col < 20 {
                     
 
                     if self.figure_collides() {
 
                         self.fix_figure_to_field();
+                        self.clear_complete_rows();
 
                         let mut rng = rand::thread_rng();   
                         let rand_index = rng.gen_range(0, 6);
 
-                        self.current_figure = Figure::new(self.figures[rand_index].clone());
+                        self.current_figure = Figure::new(self.figures[rand_index].clone(), &self.assets);
                         self.col = 0;
                         self.row = 4;
                         return Ok(());
@@ -334,8 +405,6 @@ impl ggez::event::EventHandler<GameError> for GameState {
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
         let dark_blue = graphics::Color::from_rgb(26, 51, 77);
         graphics::clear(ctx, dark_blue);
-        
-        self.current_figure.draw(ctx, &self.assets, self.col, self.row)?;
 
         for i in 0..10 {
 
@@ -356,7 +425,7 @@ impl ggez::event::EventHandler<GameError> for GameState {
                                     dest(Point2::<f32>{x: x_coord, y: y_coord}).
                                     scale(Vector2 { x: 1.75, y: 1.75 });
                                     //offset(Point2 { x: 0.5, y: 1.0 });
-                    graphics::draw(ctx, &self.assets.red, draw_params)?;
+                    graphics::draw(ctx, self.match_color_code(self.field[j][i]), draw_params)?;
                 }
             }
         }
@@ -374,7 +443,7 @@ impl ggez::event::EventHandler<GameError> for GameState {
                                     dest(Point2::<f32>{x: x_coord, y: y_coord}).
                                     scale(Vector2 { x: 1.75, y: 1.75 });
                                     //offset(Point2 { x: 0.5, y: 1.0 });
-                    graphics::draw(ctx, &self.assets.orange, draw_params)?;
+                    graphics::draw(ctx, &self.current_figure.color, draw_params)?;
                 }
             }
         }
@@ -393,6 +462,7 @@ impl ggez::event::EventHandler<GameError> for GameState {
             KeyCode::Left   => self.move_left(),
             KeyCode::Right  => self.move_right(),
             KeyCode::Up     => self.rotate_figure(),
+            KeyCode::Down   => self.hard_drop(),
             KeyCode::Escape => event::quit(ctx),
             _               => ()
         }    
