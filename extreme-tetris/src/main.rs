@@ -178,11 +178,16 @@ struct GameState {
     col: u8,
     row: u8,
     assets: Assets,
+
+    game_over: bool,
+    score: u16,
+    level: u8,
+    current_level_fps: u32
 }
 
 impl GameState {
 
-    fn new(ctx: &mut Context, conf: &Conf) -> GameResult<GameState> {
+    fn new(ctx: &mut Context, _conf: &Conf) -> GameResult<GameState> {
 
         let assets = Assets::new(ctx)?;
 
@@ -196,6 +201,11 @@ impl GameState {
             row: 7,
             assets: assets,
             figures: vec![FigureType::I, FigureType::J, FigureType::L, FigureType::O, FigureType::S, FigureType::T, FigureType::Z],
+
+            game_over: false,
+            score: 0,
+            level: 1,
+            current_level_fps: 30
         };
 
         Ok(gs)
@@ -243,7 +253,7 @@ impl GameState {
     }
 
     fn collide_at_sides(&self, dir: i8) -> bool {
-        println!("colision check");
+        //println!("colision check");
         for i in 0..4 {
 
             for j in 0..4 {
@@ -336,10 +346,11 @@ impl GameState {
         }
     }
 
-    fn clear_complete_rows(&mut self) {
+    fn clear_complete_rows(&mut self) -> u8 {
 
         let mut new_field : Field = [[0; 10]; 20];
         let mut new_field_row = 19;
+        let mut rows_cleared : u8 = 0;
 
         for row in (0..20).rev() {
 
@@ -349,7 +360,10 @@ impl GameState {
                 if self.field[row][col] != 0 { slots_count += 1; }
             }
 
-            if slots_count == 10 { continue; }
+            if slots_count == 10 {
+                rows_cleared += 1;
+                continue;
+            }
 
             if self.field[row].iter().sum::<u8>() > 0 {
                 new_field[new_field_row] = self.field[row];
@@ -358,6 +372,27 @@ impl GameState {
         }
 
         self.field = new_field;
+        rows_cleared
+    }
+
+    fn update_score(&mut self, rows_cleared: u16) {
+        self.score += rows_cleared * 80 * self.level as u16;
+    }
+
+    fn next_level_check(&mut self) {
+
+        if self.score / self.level as u16 >= 1000 { self.current_level_fps *= 2; }
+    }
+
+    fn display_score(&mut self, dest: Point2<f32>, ctx: &mut Context) -> GameResult {
+
+        let text: String = "Score: ".to_string() + &self.score.to_string();
+        let text_graphic = graphics::Text::new(text);
+
+        println!("Why no text? :(");
+        graphics::draw(ctx, &text_graphic, graphics::DrawParam::default()
+                        .dest(dest)
+                        .scale(Vector2 { x: 2.0, y: 2.0 }))
     }
 }
 
@@ -365,9 +400,9 @@ impl ggez::event::EventHandler<GameError> for GameState {
 
     fn update(&mut self, ctx: &mut Context) -> GameResult {
 
-        const DESIRED_FPS: u32 = 30;
+        //const DESIRED_FPS: u32 = 30;
 
-        while timer::check_update_time(ctx, DESIRED_FPS) {
+        while timer::check_update_time(ctx, self.current_level_fps) && !self.game_over {
             if self.frames_until_fall == 0 {
 
                 if self.col < 20 {
@@ -375,7 +410,12 @@ impl ggez::event::EventHandler<GameError> for GameState {
                     if self.figure_collides() {
 
                         self.fix_figure_to_field();
-                        self.clear_complete_rows();
+                        if (self.col == 0) {
+                            self.game_over = true;
+                            break;
+                        }
+                        let rows_cleared = self.clear_complete_rows();
+                        self.update_score(rows_cleared as u16);
 
                         let mut rng = rand::thread_rng();   
                         let rand_index = rng.gen_range(0, 6);
@@ -447,6 +487,9 @@ impl ggez::event::EventHandler<GameError> for GameState {
                 }
             }
         }
+
+        self.display_score(Point2::<f32>{x: 500.0, y: 100.0}, ctx)?;
+
         graphics::present(ctx)?;
         Ok(())
     }
