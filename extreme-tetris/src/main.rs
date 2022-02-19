@@ -243,12 +243,12 @@ impl GameState {
     }
 
     fn collide_at_sides(&self, dir: i8) -> bool {
-
+        println!("colision check");
         for i in 0..4 {
 
             for j in 0..4 {
 
-                if self.current_figure.shape[j as usize][i as usize] == 1 {
+                if self.current_figure.shape[j as usize][i as usize] != 0 {
                     
                     if (i + self.row) as i8 + dir > 9 || (i + self.row) as i8 + dir < 0 {
                         return true;
@@ -304,9 +304,10 @@ impl GameState {
             for col in 0..dim {
                 
                 //println!("{}, {}", self.col, col);
-                if self.field[col + self.col as usize][row + self.row as usize] == 1 {return;}
+                if col + self.col >= 20 || row + self.row >= 10 
+                    || self.field[(col + self.col) as usize][(row + self.row) as usize] != 0 {return;}
 
-                new_shape[row][col] = self.current_figure.shape[ind][row];
+                new_shape[row as usize][col as usize] = self.current_figure.shape[ind as usize][row as usize];
                 if ind > 0 {ind -= 1;}
             }
         }
@@ -370,7 +371,6 @@ impl ggez::event::EventHandler<GameError> for GameState {
             if self.frames_until_fall == 0 {
 
                 if self.col < 20 {
-                    
 
                     if self.figure_collides() {
 
