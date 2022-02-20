@@ -9,7 +9,7 @@ use ggez::filesystem;
 use ggez::timer;
 use std::env;
 use std::path;
-use rand::{Rng, thread_rng};
+use rand::Rng;
 //use assets::*;
 
 #[derive(Clone)]
@@ -42,10 +42,10 @@ impl Assets {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 enum FigureType {
 
-    L, J, O, S, Z, I, T
+    L, J, O, S, Z, I, T, Bomb
 }
 
 #[derive(Clone)]
@@ -120,6 +120,16 @@ impl Figure {
                                     [ 0, 0, 0, 0 ]],
 
                             color: assets.red.clone()},
+            
+            FigureType::Bomb => Figure {
+
+                            kind: kind_,
+                            shape: [[ 0, 1, 0, 0 ],
+                                    [ 0, 0, 0, 0 ],
+                                    [ 0, 0, 0, 0 ],
+                                    [ 0, 0, 0, 0 ]],
+                                    
+                            color: assets.red.clone()}
         }
     }
 
@@ -148,16 +158,25 @@ impl Figure {
         }
     }
 
-    pub fn draw(&self, ctx: &mut Context, assets: &Assets, col: u8, row: u8) -> GameResult<()> {
+    pub fn draw(&self, ctx: &mut Context, col: u8, row: u8) -> GameResult<()> {
 
-        let x_coord : f32 = 35.0 * row as f32;
-        let y_coord : f32 = 35.0 * col as f32;
-        
-        let draw_params = graphics::DrawParam::default().
-                    dest(Point2::<f32>{x: x_coord, y: y_coord}).
-                    offset(Point2 { x: 0.5, y: 1.0 });
-                graphics::draw(ctx, &assets.green, draw_params)?;
+        for i in 0..4 {
 
+            for j in 0..4 {
+
+                let x_coord : f32 = 35.0 * (i + row) as f32;
+                let y_coord : f32 = 35.0 * (j + col) as f32;
+
+                if self.shape[j as usize][i as usize] == 1 {
+                    
+                    let draw_params = graphics::DrawParam::default().
+                                    dest(Point2::<f32>{x: x_coord, y: y_coord}).
+                                    scale(Vector2 { x: 1.75, y: 1.75 });
+                                    //offset(Point2 { x: 0.5, y: 1.0 });
+                    graphics::draw(ctx, &self.color, draw_params)?;
+                }
+            }
+        }
         Ok(())
     }
 }
@@ -197,10 +216,10 @@ impl GameState {
             screen_width: 350.0,
             screen_height: 700.0,
             current_figure: Figure::new(FigureType::L, &assets),
-            col: 7,
-            row: 7,
+            col: 0,
+            row: 4,
             assets: assets,
-            figures: vec![FigureType::I, FigureType::J, FigureType::L, FigureType::O, FigureType::S, FigureType::T, FigureType::Z],
+            figures: vec![FigureType::I, FigureType::J, FigureType::L, FigureType::O, FigureType::S, FigureType::T, FigureType::Z, FigureType::Bomb],
 
             game_over: false,
             score: 0,
@@ -276,7 +295,34 @@ impl GameState {
         false
     }
 
+    fn bomb_collision(&mut self) {
+        
+        for i in 0..4 {
+            for j in 0..4 {
+
+                if self.current_figure.shape[j][i] == 1 {
+
+                    for x in i-1..i+2 {
+                        let mut rng = rand::thread_rng();
+                        let will_destroy_box = rng.gen_range(0, 2);
+                        
+                        if will_destroy_box == 1 && (self.col + j as u8) < 19 {
+                            //println!("destr?");
+                            self.field[j + 1 + self.col as usize][x + self.row as usize] = 0;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
     fn fix_figure_to_field(&mut self) -> () {
+
+        if self.current_figure.kind == FigureType::Bomb {
+            //println!("Bomb colision");
+            self.bomb_collision()
+        }
 
         for i in 0..4 {
             for j in 0..4 {
@@ -286,13 +332,15 @@ impl GameState {
                     if j + self.col < 20 && i + self.row < 10 {
                         self.field[(j + self.col) as usize][(i + self.row) as usize] = match self.current_figure.kind {
 
+                            //FigureType::Bomb => 0,
                             FigureType::I => 1,
                             FigureType::J => 2,
                             FigureType::L => 3,
                             FigureType::O => 4,
                             FigureType::S => 5,
                             FigureType::T => 6,
-                            FigureType::Z => 7
+                            FigureType::Z => 7,
+                            _             => 0
                         };
                     }
                 }
@@ -379,9 +427,12 @@ impl GameState {
         self.score += rows_cleared * 80 * self.level as u16;
     }
 
-    fn next_level_check(&mut self) {
+    fn check_level_update(&mut self) {
 
-        if self.score / self.level as u16 >= 1000 { self.current_level_fps *= 2; }
+        if self.score / self.level as u16 >= 1000 { 
+            self.current_level_fps += (0.5 * self.current_level_fps as f32) as u32;
+            self.level += 1
+        }
     }
 
     fn display_score(&mut self, dest: Point2<f32>, ctx: &mut Context) -> GameResult {
@@ -389,7 +440,6 @@ impl GameState {
         let text: String = "Score: ".to_string() + &self.score.to_string();
         let text_graphic = graphics::Text::new(text);
 
-        println!("Why no text? :(");
         graphics::draw(ctx, &text_graphic, graphics::DrawParam::default()
                         .dest(dest)
                         .scale(Vector2 { x: 2.0, y: 2.0 }))
@@ -400,9 +450,13 @@ impl ggez::event::EventHandler<GameError> for GameState {
 
     fn update(&mut self, ctx: &mut Context) -> GameResult {
 
-        //const DESIRED_FPS: u32 = 30;
+        let fps;
+        if self.current_figure.kind == FigureType::Bomb { fps = 260; }
+        else {
+            fps = self.current_level_fps;
+        }
 
-        while timer::check_update_time(ctx, self.current_level_fps) && !self.game_over {
+        while timer::check_update_time(ctx, fps) && !self.game_over {
             if self.frames_until_fall == 0 {
 
                 if self.col < 20 {
@@ -410,17 +464,19 @@ impl ggez::event::EventHandler<GameError> for GameState {
                     if self.figure_collides() {
 
                         self.fix_figure_to_field();
-                        if (self.col == 0) {
+                        if self.col == 0 {
                             self.game_over = true;
                             break;
                         }
                         let rows_cleared = self.clear_complete_rows();
                         self.update_score(rows_cleared as u16);
+                        self.check_level_update();
 
-                        let mut rng = rand::thread_rng();   
-                        let rand_index = rng.gen_range(0, 6);
+                        let mut rng = rand::thread_rng();
+                        let rand_index = rng.gen_range(0, 8);
 
                         self.current_figure = Figure::new(self.figures[rand_index].clone(), &self.assets);
+
                         self.col = 0;
                         self.row = 4;
                         return Ok(());
@@ -470,23 +526,7 @@ impl ggez::event::EventHandler<GameError> for GameState {
             }
         }
 
-        for i in 0..4 {
-
-            for j in 0..4 {
-
-                let x_coord : f32 = 35.0 * (i + self.row) as f32;
-                let y_coord : f32 = 35.0 * (j + self.col) as f32;
-
-                if self.current_figure.shape[j as usize][i as usize] == 1 {
-                    
-                    let draw_params = graphics::DrawParam::default().
-                                    dest(Point2::<f32>{x: x_coord, y: y_coord}).
-                                    scale(Vector2 { x: 1.75, y: 1.75 });
-                                    //offset(Point2 { x: 0.5, y: 1.0 });
-                    graphics::draw(ctx, &self.current_figure.color, draw_params)?;
-                }
-            }
-        }
+        self.current_figure.draw(ctx, self.col, self.row)?;
 
         self.display_score(Point2::<f32>{x: 500.0, y: 100.0}, ctx)?;
 
