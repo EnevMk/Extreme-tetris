@@ -190,7 +190,7 @@ struct GameState {
     field: Field,
     figures: Vec<FigureType>,
     current_figure: Figure,
-    //next_figure: Figure,
+    next_figure: Figure,
     screen_width: f32,
     screen_height: f32,
     //box_w_h: f32,
@@ -208,14 +208,19 @@ impl GameState {
 
     fn new(ctx: &mut Context, _conf: &Conf) -> GameResult<GameState> {
 
+        let mut rng = rand::thread_rng();
+        let rand_index = rng.gen_range(0, 8);
+
         let assets = Assets::new(ctx)?;
 
-        let gs = GameState {
+        let mut gs = GameState {
             frames_until_fall: 20,
             field: [[0; 10] ; 20],
             screen_width: 350.0,
             screen_height: 700.0,
             current_figure: Figure::new(FigureType::L, &assets),
+            next_figure: Figure::new(FigureType::L, &assets),
+            //current_figure: Figure::new(self.figures[rand_index].clone(), &self.assets),
             col: 0,
             row: 4,
             assets: assets,
@@ -226,7 +231,10 @@ impl GameState {
             level: 1,
             current_level_fps: 30
         };
-
+        gs.current_figure = Figure::new(gs.figures[rand_index].clone(), &gs.assets);
+        
+        let rand_index = rng.gen_range(0, 8);
+        gs.next_figure = Figure::new(gs.figures[rand_index].clone(), &gs.assets);
         Ok(gs)
     }
 
@@ -444,6 +452,11 @@ impl GameState {
                         .dest(dest)
                         .scale(Vector2 { x: 2.0, y: 2.0 }))
     }
+
+    fn draw_next_figure(&mut self, ctx: &mut Context) -> GameResult {
+
+        self.next_figure.draw(ctx, 4, 15)
+    }
 }
 
 impl ggez::event::EventHandler<GameError> for GameState {
@@ -475,7 +488,8 @@ impl ggez::event::EventHandler<GameError> for GameState {
                         let mut rng = rand::thread_rng();
                         let rand_index = rng.gen_range(0, 8);
 
-                        self.current_figure = Figure::new(self.figures[rand_index].clone(), &self.assets);
+                        self.current_figure = self.next_figure.clone();
+                        self.next_figure = Figure::new(self.figures[rand_index].clone(), &self.assets);
 
                         self.col = 0;
                         self.row = 4;
@@ -527,8 +541,8 @@ impl ggez::event::EventHandler<GameError> for GameState {
         }
 
         self.current_figure.draw(ctx, self.col, self.row)?;
-
         self.display_score(Point2::<f32>{x: 500.0, y: 100.0}, ctx)?;
+        self.draw_next_figure(ctx)?;
 
         graphics::present(ctx)?;
         Ok(())
