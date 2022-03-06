@@ -1,0 +1,11 @@
+C:\Users\ildiavolo\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\libc-014eae29a7c3c1f4.rmeta: C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\lib.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\macros.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\fixed_width_ints.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\windows\mod.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\windows\msvc\mod.rs
+
+C:\Users\ildiavolo\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\liblibc-014eae29a7c3c1f4.rlib: C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\lib.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\macros.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\fixed_width_ints.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\windows\mod.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\windows\msvc\mod.rs
+
+C:\Users\ildiavolo\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\libc-014eae29a7c3c1f4.d: C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\lib.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\macros.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\fixed_width_ints.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\windows\mod.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\windows\msvc\mod.rs
+
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\lib.rs:
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\macros.rs:
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\fixed_width_ints.rs:
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\windows\mod.rs:
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.117\src\windows\msvc\mod.rs:

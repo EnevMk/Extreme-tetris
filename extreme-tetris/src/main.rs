@@ -191,8 +191,6 @@ struct GameState {
     figures: Vec<FigureType>,
     current_figure: Figure,
     next_figure: Figure,
-    screen_width: f32,
-    screen_height: f32,
     //box_w_h: f32,
     col: u8,
     row: u8,
@@ -201,7 +199,10 @@ struct GameState {
     game_over: bool,
     score: u16,
     level: u8,
-    current_level_fps: u32
+    current_level_fps: u32,
+
+    BOTTOM_LINE_INDEX: u8,
+    RIGHTEST_INDEX: u8,
 }
 
 impl GameState {
@@ -216,8 +217,6 @@ impl GameState {
         let mut gs = GameState {
             frames_until_fall: 20,
             field: [[0; 10] ; 20],
-            screen_width: 350.0,
-            screen_height: 700.0,
             current_figure: Figure::new(FigureType::L, &assets),
             next_figure: Figure::new(FigureType::L, &assets),
             //current_figure: Figure::new(self.figures[rand_index].clone(), &self.assets),
@@ -229,7 +228,10 @@ impl GameState {
             game_over: false,
             score: 0,
             level: 1,
-            current_level_fps: 30
+            current_level_fps: 30,
+
+            BOTTOM_LINE_INDEX: 19,
+            RIGHTEST_INDEX: 9
         };
         gs.current_figure = Figure::new(gs.figures[rand_index].clone(), &gs.assets);
         
@@ -264,7 +266,7 @@ impl GameState {
 
                 if self.current_figure.shape[j as usize][i as usize] != 0 {
                     
-                    if j + self.col + 1 <= 20 && i + self.row < 10 {
+                    if j + self.col <= self.BOTTOM_LINE_INDEX && i + self.row < 10 {
 
                         if j + self.col == 19
                           || self.field[(j + self.col + 1) as usize][(i + self.row) as usize] != 0
@@ -307,16 +309,18 @@ impl GameState {
         
         for i in 0..4 {
             for j in 0..4 {
-
+                // randomly destroying three boxes below the bomb figure
                 if self.current_figure.shape[j][i] == 1 {
 
-                    for x in i-1..i+2 {
+                    for x in (i as i8 - 1)..(i+2) as i8 { // strange looking range needed for validation
                         let mut rng = rand::thread_rng();
                         let will_destroy_box = rng.gen_range(0, 2);
                         
-                        if will_destroy_box == 1 && (self.col + j as u8) < 19 {
-                            //println!("destr?");
-                            self.field[j + 1 + self.col as usize][x + self.row as usize] = 0;
+                        if will_destroy_box == 1 
+                        && (self.col + j as u8) < self.BOTTOM_LINE_INDEX
+                        && x as i8 > self.RIGHTEST_INDEX as i8 && x >= 0 {
+
+                            self.field[j + 1 + self.col as usize][x as usize + self.row as usize] = 0;
                         }
                     }
                 }
@@ -337,7 +341,7 @@ impl GameState {
 
                 if self.current_figure.shape[j as usize][i as usize] == 1 {
                     
-                    if j + self.col < 20 && i + self.row < 10 {
+                    if j + self.col <= self.BOTTOM_LINE_INDEX && i + self.row < 10 {
                         self.field[(j + self.col) as usize][(i + self.row) as usize] = match self.current_figure.kind {
 
                             //FigureType::Bomb => 0,
@@ -370,7 +374,7 @@ impl GameState {
             for col in 0..dim {
                 
                 //println!("{}, {}", self.col, col);
-                if col + self.col >= 20 || row + self.row >= 10 
+                if col + self.col > self.BOTTOM_LINE_INDEX || row + self.row >= 10 
                     || self.field[(col + self.col) as usize][(row + self.row) as usize] != 0 {return;}
 
                 new_shape[row as usize][col as usize] = self.current_figure.shape[ind as usize][row as usize];
@@ -472,7 +476,7 @@ impl ggez::event::EventHandler<GameError> for GameState {
         while timer::check_update_time(ctx, fps) && !self.game_over {
             if self.frames_until_fall == 0 {
 
-                if self.col < 20 {
+                if self.col <= self.BOTTOM_LINE_INDEX {
 
                     if self.figure_collides() {
 
@@ -567,8 +571,7 @@ impl ggez::event::EventHandler<GameError> for GameState {
 }
 
 fn main() {
-    //println!("Hello, world!");
-
+    
     let conf = Conf::new()
             .window_mode(WindowMode{
                 width: 1000.0,

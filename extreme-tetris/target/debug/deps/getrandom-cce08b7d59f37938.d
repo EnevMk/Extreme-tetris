@@ -1,0 +1,11 @@
+C:\Users\ildiavolo\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\getrandom-cce08b7d59f37938.rmeta: C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\lib.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\util.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error_impls.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\windows.rs
+
+C:\Users\ildiavolo\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\libgetrandom-cce08b7d59f37938.rlib: C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\lib.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\util.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error_impls.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\windows.rs
+
+C:\Users\ildiavolo\Desktop\dev\Extreme Tetris\extreme-tetris\target\debug\deps\getrandom-cce08b7d59f37938.d: C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\lib.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\util.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error_impls.rs C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\windows.rs
+
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\lib.rs:
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error.rs:
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\util.rs:
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\error_impls.rs:
+C:\Users\ildiavolo\.cargo\registry\src\github.com-1ecc6299db9ec823\getrandom-0.1.16\src\windows.rs:
