@@ -318,7 +318,7 @@ impl GameState {
                         
                         if will_destroy_box == 1 
                         && (self.col + j as u8) < self.BOTTOM_LINE_INDEX
-                        && x as i8 > self.RIGHTEST_INDEX as i8 && x >= 0 {
+                        && x as i8 <= self.RIGHTEST_INDEX as i8 && x >= 0 {
 
                             self.field[j + 1 + self.col as usize][x as usize + self.row as usize] = 0;
                         }
