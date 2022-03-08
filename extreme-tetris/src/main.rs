@@ -441,8 +441,8 @@ impl GameState {
 
     fn check_level_update(&mut self) {
 
-        if self.score / self.level as u16 >= 1000 { 
-            self.current_level_fps += (0.5 * self.current_level_fps as f32) as u32;
+        if (self.score / self.level as u16) >= 1000 * self.level as u16 { 
+            self.current_level_fps += (0.4 * self.current_level_fps as f32) as u32;
             self.level += 1
         }
     }
